@@ -1,4 +1,4 @@
-package com.almissbah.weather.ui.splash
+package com.almissbah.weather.ui.forecast
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
 
-class SplashFragment : WeatherForecastFragment() {
+class ForecastFragment : WeatherForecastFragment() {
 
-    private lateinit var splashViewModel: SplashViewModel
+    private lateinit var forecastViewModel: ForecastViewModel
     override fun initViewModel() {
         TODO("Not yet implemented")
     }
@@ -30,15 +30,15 @@ class SplashFragment : WeatherForecastFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        splashViewModel =
-            ViewModelProviders.of(this).get(SplashViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_splash, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        splashViewModel.text.observe(viewLifecycleOwner, Observer {
+        forecastViewModel =
+            ViewModelProviders.of(this).get(ForecastViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_forcast, container, false)
+        val textView: TextView = root.findViewById(R.id.text_gallery)
+        forecastViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

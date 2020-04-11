@@ -1,7 +1,7 @@
 package com.almissbah.weather.di.component.component
 
 import android.app.Application
-import com.almissbah.weather.WeatherForcastApp
+import com.almissbah.weather.WeatherForecastApp
 import com.almissbah.weather.di.component.module.ActivityModule
 import com.almissbah.weather.di.component.module.ApiModule
 import com.almugdad.takhlesy.di.module.FragmentModule
@@ -13,8 +13,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApiModule::class, RepoModule::class, AndroidSupportInjectionModule::class, ViewModelModule::class, FragmentModule::class, ActivityModule::class])
-interface AppComponent : AndroidInjector<WeatherForcastApp> {
+@Component(modules = [ApiModule::class, AndroidSupportInjectionModule::class, ViewModelModule::class, FragmentModule::class, ActivityModule::class])
+interface AppComponent : AndroidInjector<WeatherForecastApp> {
 
     @Component.Builder
     interface Builder {
@@ -24,5 +24,5 @@ interface AppComponent : AndroidInjector<WeatherForcastApp> {
         fun build(): AppComponent
     }
 
-    override fun inject(WeatherForcastApp: WeatherForcastApp)
+    override fun inject(WeatherForecastApp: WeatherForecastApp)
 }

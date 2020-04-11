@@ -1,7 +1,7 @@
 package com.almugdad.takhlesy.di.module
 
-import com.almissbah.weather.ui.forcast.ForcastFragment
-import com.almissbah.weather.ui.home.HomeFragment
+import com.almissbah.weather.ui.forecast.ForecastFragment
+import com.almissbah.weather.ui.home.SearchFragment
 import com.almissbah.weather.ui.splash.SplashFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -13,8 +13,8 @@ abstract class FragmentModule {
     abstract fun contributeSplashFragment(): SplashFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMainFragment(): HomeFragment
+    abstract fun contributeMainFragment(): SearchFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeForcastFragment(): ForcastFragment
+    abstract fun contributeForecastFragment(): ForecastFragment
 }

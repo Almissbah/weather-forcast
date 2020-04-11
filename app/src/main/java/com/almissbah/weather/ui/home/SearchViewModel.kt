@@ -1,13 +1,13 @@
-package com.almissbah.weather.ui.forcast
+package com.almissbah.weather.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ForcastViewModel : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+        value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
 }

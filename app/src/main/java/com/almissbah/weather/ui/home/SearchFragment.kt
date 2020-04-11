@@ -1,4 +1,4 @@
-package com.almissbah.weather.ui.splash
+package com.almissbah.weather.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
 
-class SplashFragment : WeatherForecastFragment() {
+class SearchFragment : WeatherForecastFragment() {
 
-    private lateinit var splashViewModel: SplashViewModel
+    private lateinit var searchViewModel: SearchViewModel
     override fun initViewModel() {
         TODO("Not yet implemented")
     }
@@ -30,15 +30,15 @@ class SplashFragment : WeatherForecastFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        splashViewModel =
-            ViewModelProviders.of(this).get(SplashViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_splash, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        splashViewModel.text.observe(viewLifecycleOwner, Observer {
+        searchViewModel =
+            ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_search, container, false)
+        val textView: TextView = root.findViewById(R.id.text_home)
+        searchViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
