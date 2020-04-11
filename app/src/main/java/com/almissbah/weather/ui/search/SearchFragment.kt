@@ -1,4 +1,4 @@
-package com.almissbah.weather.ui.home
+package com.almissbah.weather.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

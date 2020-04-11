@@ -11,6 +11,9 @@ interface WeatherApiService {
     fun getCityInfo(@Query("q") cityName: String): Observable<Response<WeatherApiResponse>>
 
     @GET("/forecast")
-    fun fetchById(@Query("q") cityName: String): Observable<Response<List<WeatherApiResponse>>>
+    fun fetchForecastByCoordinates(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double
+    ): Observable<Response<List<WeatherApiResponse>>>
 
 }

@@ -1,4 +1,4 @@
-package com.almissbah.weather.ui.home
+package com.almissbah.weather.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

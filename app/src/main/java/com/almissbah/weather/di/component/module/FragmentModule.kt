@@ -1,7 +1,7 @@
 package com.almugdad.takhlesy.di.module
 
 import com.almissbah.weather.ui.forecast.ForecastFragment
-import com.almissbah.weather.ui.home.SearchFragment
+import com.almissbah.weather.ui.search.SearchFragment
 import com.almissbah.weather.ui.splash.SplashFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
