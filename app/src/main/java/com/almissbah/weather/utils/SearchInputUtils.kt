@@ -14,15 +14,15 @@ class SearchInputUtils {
 
         fun validateCitiesQuery(query: String): CitiesCount {
             val list = getValidCityList(query)
-            return validateCitiesCount(list)
+            return validateCitiesCount(list.size)
         }
 
-        fun validateCitiesCount(list: List<String>): CitiesCount {
+        fun validateCitiesCount(size: Int): CitiesCount {
             return when {
-                list.size < 3 -> {
+                size < 3 -> {
                     CitiesCount.LessThanThreeCities
                 }
-                list.size > 7 -> CitiesCount.MoreThanSevenCities
+                size > 7 -> CitiesCount.MoreThanSevenCities
                 else -> CitiesCount.Valid
             }
         }

@@ -52,7 +52,7 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
 
     fun validateInput(query: String) {
         val list = SearchInputUtils.getValidCityList(query)
-        val result = SearchInputUtils.validateCitiesCount(list)
+        val result = SearchInputUtils.validateCitiesCount(list.size)
         if (result == SearchInputUtils.CitiesCount.Valid) {
             fetchWeatherInfo(list)
         } else {
