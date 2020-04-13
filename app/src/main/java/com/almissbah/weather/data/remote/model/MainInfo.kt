@@ -1,3 +1,8 @@
 package com.almissbah.weather.data.remote.model
 
-data class MainInfo(val temp_min: Double, val temp_max: Double)
+import com.google.gson.annotations.SerializedName
+
+data class MainInfo(
+    @SerializedName("temp_min") val minTemp: Double,
+    @SerializedName("temp_max") val maxTemp: Double
+)

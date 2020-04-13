@@ -4,8 +4,7 @@ import io.reactivex.observers.DisposableObserver
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
-import java.net.HttpURLConnection.HTTP_BAD_REQUEST
-import java.net.HttpURLConnection.HTTP_OK
+import java.net.HttpURLConnection.*
 import java.net.SocketTimeoutException
 
 open class CallbackWrapper<T>(private val callback: HttpCallback<T>) :
@@ -14,6 +13,8 @@ open class CallbackWrapper<T>(private val callback: HttpCallback<T>) :
     private fun onSuccess(t: Response<T>) {
         if (t.code() == HTTP_OK) {
             callback.onSuccess(t.body())
+        } else if (t.code() >= HTTP_NOT_FOUND) {
+            callback.onNotFound()
         } else if (t.code() >= HTTP_BAD_REQUEST) {
             callback.onServerError()
         }
@@ -26,7 +27,13 @@ open class CallbackWrapper<T>(private val callback: HttpCallback<T>) :
     override fun onError(e: Throwable) {
         when (e) {
             is HttpException -> {
-                callback.onServerError()
+                val response = e.response()
+                if (response.code() == HTTP_NOT_FOUND
+                ) {
+                    callback.onNotFound()
+                } else {
+                    callback.onServerError()
+                }
             }
             is SocketTimeoutException -> {
                 callback.onNetworkError()
@@ -47,6 +54,7 @@ open class CallbackWrapper<T>(private val callback: HttpCallback<T>) :
         fun onSuccess(t: T?)
         fun onNetworkError()
         fun onServerError()
+        fun onNotFound()
     }
 
 }
