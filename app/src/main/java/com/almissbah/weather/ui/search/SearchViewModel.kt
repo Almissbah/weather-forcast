@@ -1,52 +1,82 @@
 package com.almissbah.weather.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.almissbah.weather.data.remote.CallbackWrapper
+import com.almissbah.weather.data.Resource
 import com.almissbah.weather.data.remote.model.CityWeather
-import com.almissbah.weather.data.remote.model.CityWeatherRequest
 import com.almissbah.weather.data.remote.repo.CityWeatherRepo
 import com.almissbah.weather.utils.SearchInputUtils
+import io.reactivex.disposables.Disposable
+import retrofit2.Response
 import javax.inject.Inject
+
 
 class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRepo) : ViewModel() {
     companion object {
         const val TAG = "SearchViewModel"
     }
 
+    enum class Action { UpdateList, ShowNetworkError }
+
+    private var disposable: Disposable? = null
     private val _queryValidator = MutableLiveData<SearchInputUtils.CitiesCount>()
     val queryValidator: LiveData<SearchInputUtils.CitiesCount> = _queryValidator
-    var cityWeatherList = mutableListOf<CityWeather>()
+
+    private val _searchResult = MutableLiveData<Resource<MutableList<SearchResult>, Action>>()
+    val searchResult: LiveData<Resource<MutableList<SearchResult>, Action>> = _searchResult
+
 
     private fun fetchWeatherInfo(list: List<String>) {
-        cityWeatherList = mutableListOf()
+        disposable = weatherRepo.getAllCitiesWeather(list).subscribe { it ->
+            if (it.isEmpty()) {
+                handleError()
+            } else {
+                handleSuccess(it, list)
+            }
+        }
+    }
 
-        list.forEach {
-            val request = CityWeatherRequest(it)
+    private fun handleError() {
+        _searchResult.postValue(Resource(null, Action.ShowNetworkError, ""))
+    }
 
-            val callback = CallbackWrapper(object :
-                CallbackWrapper.HttpCallback<CityWeather> {
-                override fun onSuccess(t: CityWeather?) {
-                    Log.i(TAG, "$it temp:${t!!.mainInfo!!.maxTemp}")
-                }
+    private fun handleSuccess(
+        it: MutableList<Response<CityWeather>>,
+        list: List<String>
+    ) {
+        val resultsList = mutableListOf<SearchResult>()
+        it.forEach {
+            if (it.isSuccessful) {
+                resultsList.add(
+                    SearchResult(
+                        it.body()!!.cityName!!,
+                        it.body(),
+                        SearchResult.Result.Found
+                    )
+                )
+            } else {
+                resultsList.add(
+                    SearchResult(
+                        "null",
+                        null,
+                        SearchResult.Result.NotFound
+                    )
+                )
+            }
+        }
+        recoverCitiesNames(resultsList, list)
+        _searchResult.postValue(Resource(resultsList, Action.UpdateList, ""))
+    }
 
-                override fun onNetworkError() {
-
-                }
-
-                override fun onServerError() {
-
-                }
-
-                override fun onNotFound() {
-                    Log.i(TAG, "$it NOT FOUND")
-                }
-
-            })
-
-            weatherRepo.getCityWeather(request).subscribe(callback)
+    private fun recoverCitiesNames(
+        resultsList: MutableList<SearchResult>,
+        list: List<String>
+    ) {
+        resultsList.forEachIndexed { index, searchResult ->
+            if (searchResult.result == SearchResult.Result.NotFound) {
+                searchResult.cityName = list[index]
+            }
         }
     }
 
@@ -55,8 +85,7 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
         val result = SearchInputUtils.validateCitiesCount(list.size)
         if (result == SearchInputUtils.CitiesCount.Valid) {
             fetchWeatherInfo(list)
-        } else {
-            _queryValidator.postValue(result)
         }
+        _queryValidator.postValue(result)
     }
 }

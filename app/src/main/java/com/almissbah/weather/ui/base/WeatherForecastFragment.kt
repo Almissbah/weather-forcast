@@ -2,11 +2,14 @@ package com.almissbah.weather.ui.base
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
+import com.almissbah.weather.utils.hide
+import com.almissbah.weather.utils.unHide
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 
 abstract class WeatherForecastFragment : DaggerFragment() {
-
+    var mProgressBar: ProgressBar? = null
 
     abstract fun initViewModel()
 
@@ -40,6 +43,14 @@ abstract class WeatherForecastFragment : DaggerFragment() {
             msg,
             Snackbar.LENGTH_LONG
         ).show()
+    }
+
+    fun showLoading() {
+        mProgressBar?.unHide()
+    }
+
+    fun hideLoading() {
+        mProgressBar?.hide()
     }
 
     interface DialogCallback {

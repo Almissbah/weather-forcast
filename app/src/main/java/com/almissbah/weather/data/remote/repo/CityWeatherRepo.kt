@@ -7,4 +7,5 @@ import retrofit2.Response
 
 interface CityWeatherRepo {
     fun getCityWeather(request: CityWeatherRequest): Observable<Response<CityWeather>>
+    fun getAllCitiesWeather(list: List<String>): Observable<MutableList<Response<CityWeather>>>
 }
