@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.almissbah.weather.di.component.factory.ViewModelFactory
 import com.almissbah.weather.ui.forecast.ForecastViewModel
 import com.almissbah.weather.ui.search.SearchViewModel
-import com.almissbah.weather.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -32,17 +31,13 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
-    abstract fun bindHomeViewModel(viewModel: SearchViewModel): ViewModel
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ForecastViewModel::class)
-    abstract fun bindLoginViewModel(viewModel: ForecastViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(SplashViewModel::class)
-    abstract fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
+    abstract fun bindForecastViewModel(viewModel: ForecastViewModel): ViewModel
+ 
 
     @Binds
     @Singleton

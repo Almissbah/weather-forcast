@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -51,7 +50,6 @@ object ApiModule {
     @Singleton
     @JvmStatic
     fun provideHttpClient(
-        cache: Cache,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         requestInterceptor: RequestInterceptor
     ): OkHttpClient {
@@ -61,7 +59,7 @@ object ApiModule {
                 .readTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(RequestInterceptor())
+                .addInterceptor(requestInterceptor)
 
         if (ENABLE_LOG) okHttp.addInterceptor(httpLoggingInterceptor)
 
