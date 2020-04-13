@@ -29,6 +29,10 @@ abstract class WeatherForecastFragment : DaggerFragment() {
         super.onDestroy()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initViews()
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     fun showSnackbar(view: View, msg: String) {
         Snackbar.make(

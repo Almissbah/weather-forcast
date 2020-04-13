@@ -6,15 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
+import javax.inject.Inject
 
 class ForecastFragment : WeatherForecastFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var forecastViewModel: ForecastViewModel
     override fun initViewModel() {
-        TODO("Not yet implemented")
+        forecastViewModel =
+            ViewModelProviders.of(
+                this,
+                viewModelFactory
+            )[ForecastViewModel::class.java]
+
     }
 
     override fun initViews() {
@@ -34,8 +44,6 @@ class ForecastFragment : WeatherForecastFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        forecastViewModel =
-            ViewModelProviders.of(this).get(ForecastViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_forcast, container, false)
         val textView: TextView = root.findViewById(R.id.text_gallery)
         forecastViewModel.text.observe(viewLifecycleOwner, Observer {

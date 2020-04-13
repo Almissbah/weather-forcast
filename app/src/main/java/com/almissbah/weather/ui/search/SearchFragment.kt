@@ -4,29 +4,48 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
+import com.almissbah.weather.utils.SearchInputUtils
+import kotlinx.android.synthetic.main.fragment_search.*
+import javax.inject.Inject
 
 class SearchFragment : WeatherForecastFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var searchViewModel: SearchViewModel
+
     override fun initViewModel() {
-        TODO("Not yet implemented")
+        searchViewModel =
+            ViewModelProviders.of(
+                this,
+                viewModelFactory
+            )[SearchViewModel::class.java]
     }
 
     override fun initViews() {
-        TODO("Not yet implemented")
+        btnSearch.setOnClickListener {
+            searchViewModel.validateInput(etSearch.text.toString())
+        }
     }
 
     override fun subscribe() {
-        TODO("Not yet implemented")
+        searchViewModel.queryValidator.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                SearchInputUtils.CitiesCount.LessThanThreeCities -> etSearch.error =
+                    "You entered less than three different cities !"
+                SearchInputUtils.CitiesCount.MoreThanSevenCities -> etSearch.error =
+                    "You entered more than seven cities !"
+            }
+        })
     }
 
     override fun unSubscribe() {
-        TODO("Not yet implemented")
     }
 
     override fun onCreateView(
@@ -34,13 +53,9 @@ class SearchFragment : WeatherForecastFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        searchViewModel =
-            ViewModelProviders.of(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        searchViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
+
+
 }
