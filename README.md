@@ -15,28 +15,34 @@ Based on mvvm architecture and repository pattern.
 * A web API service.
 * A repository that works with the API service to provide a unified data interface.
 * A utils class to handle user input.
+* A Location liveData class for getting location updates.
 * ViewModels that provide data specific to the UI using RxJava and LiveData.
 * The UI, which shows a visual representation of the data in the ViewModel.
 
 ### App Packages:
 * **data** - contains:
   * **repo** -  app repository classes for handling data.
-  * **remote** - contains classes needed for making API calls to OpenWeather server, using Retrofit.
+  * **remote** - contains classes needed for making API calls to OpenWeather server using Retrofit.
 * **di** - contains dependency injection classes, using Dagger2.
 * **ui** - contains classes needed to display Activity and Fragment.
-* **utils** - contains app constants and Utils classes.
+* **utils** - contains app constants, Kotlin Extension functions and Utils classes.
 
 
 ### App Specs
-* Minimum SDK 21.
+* Minimum SDK 16.
 * Kotlin.
+* GPS Location.
 * MVVM Architecture.
+* JetPack.
 * Android Architecture Components (LiveData, Lifecycle, ViewModel, ConstraintLayout, Navigation component)
 * Dagger 2 for dependency injection.
-* RxJava for making API calls.
 * Retrofit 2 for API integration.
+* RxJava for making API calls.
 * Gson for serialisation.
 * Junit 4 for testing.
 
 ### Notes 
 * Unit tests are generated for SearchInputUtils.
+* For generating covarage reports launch gradle window from android studio's side bar and run the following command:
+   gradle :app:createDebugCoverageReport
+ 
