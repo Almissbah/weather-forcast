@@ -45,4 +45,6 @@ Based on mvvm architecture and repository pattern.
 * Unit tests are created for UserInputValidator and Sample espresso tests are created for MainActivity.
 * For generating covarage reports launch gradle window from android studio's side bar and run the following command:
    gradle :app:createDebugCoverageReport
+* To run the app clone the repo into a new android studio project and build the code then lanuch it on any android phone.
+* To run test cases head toward (test and androidTest) packages in android studio, right click on the class and seleced run.
  
