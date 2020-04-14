@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
+import com.almissbah.weather.ui.forecast.adapter.CityForecastAdapter
 import com.almissbah.weather.utils.LocationUtils.Companion.checkPermissions
 import com.almissbah.weather.utils.LocationUtils.Companion.isLocationEnabled
+import kotlinx.android.synthetic.main.fragment_forcast.*
 import javax.inject.Inject
 
 class ForecastFragment : WeatherForecastFragment() {
@@ -27,6 +30,7 @@ class ForecastFragment : WeatherForecastFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var forecastViewModel: ForecastViewModel
 
+    private var mAdapter: CityForecastAdapter? = null
 
     override fun initViewModel() {
         forecastViewModel =
@@ -38,7 +42,9 @@ class ForecastFragment : WeatherForecastFragment() {
     }
 
     override fun initViews() {
-
+        rvForecast.layoutManager = LinearLayoutManager(this.context)
+        mAdapter = CityForecastAdapter()
+        rvForecast.adapter = mAdapter
     }
 
     override fun subscribe() {
@@ -47,6 +53,7 @@ class ForecastFragment : WeatherForecastFragment() {
             when (it.action) {
                 ForecastViewModel.Action.Success -> {
                     Log.i("cityForecast", it.payload?.city!!.country)
+                    mAdapter?.setData(it!!.payload!!.list!!)
                 }
                 ForecastViewModel.Action.NotFound -> TODO()
                 ForecastViewModel.Action.ShowNetworkError -> TODO()

@@ -1,23 +1,21 @@
-package com.almissbah.weather.ui.search.adapter
+package com.almissbah.weather.ui.forecast.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.almissbah.weather.R
-import com.almissbah.weather.ui.search.CityWeatherWithData
+import com.almissbah.weather.data.remote.model.CityWeatherWithDate
 import com.almissbah.weather.utils.gone
-import com.almissbah.weather.utils.unHide
 
 
-class SearchResultAdapter :
-    RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class CityForecastAdapter :
+    RecyclerView.Adapter<CityForecastAdapter.ViewHolder>() {
 
-    private var mList: MutableList<CityWeatherWithData> = mutableListOf()
+    private var mList: MutableList<CityWeatherWithDate> = mutableListOf()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val context: Context = viewGroup.context
@@ -40,22 +38,22 @@ class SearchResultAdapter :
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
         } else {
-            val searchResult = payloads[0] as CityWeatherWithData
+            val searchResult = payloads[0] as CityWeatherWithDate
             updateItemView(holder, position, searchResult)
         }
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val result: CityWeatherWithData = mList[holder.adapterPosition]
+        val result: CityWeatherWithDate = mList[holder.adapterPosition]
         holder.bindResult(result)
     }
 
 
-    fun setData(newList: MutableList<CityWeatherWithData>) {
+    fun setData(newList: MutableList<CityWeatherWithDate>) {
 
         val diffCallback =
-            DiffUtilsCallback(
+            ForecastDiffUtilsCallback(
                 mList,
                 newList
             )
@@ -65,7 +63,7 @@ class SearchResultAdapter :
 
     }
 
-    private fun updateItemView(holder: ViewHolder, position: Int, result: CityWeatherWithData) {
+    private fun updateItemView(holder: ViewHolder, position: Int, result: CityWeatherWithDate) {
         mList[position] = result
 
     }
@@ -75,29 +73,23 @@ class SearchResultAdapter :
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        var tvCityName: TextView = view.findViewById(R.id.tvTitle)
+        var tvTitle: TextView = view.findViewById(R.id.tvTitle)
         var tvTemp: TextView = view.findViewById(R.id.tvTemp)
         var tvWindSpeed: TextView = view.findViewById(R.id.tvWindSpeed)
         var tvWeatherDescription: TextView = view.findViewById(R.id.tvWeatherDescription)
         var tvCityNotFound: TextView = view.findViewById(R.id.tvCityNotFound)
-        var layoutCityData: ConstraintLayout = view.findViewById(R.id.layoutCityData)
-        fun bindResult(result: CityWeatherWithData) {
-            if (result.result == CityWeatherWithData.Result.Found) {
-                tvCityNotFound.gone()
-                tvCityName.text = result.cityName
-                val mainInfo = result.cityWeather?.mainInfo
-                tvTemp.text =
-                    "${mainInfo?.minTemp} - ${mainInfo?.maxTemp}"
-                tvWindSpeed.text =
-                    "${result.cityWeather?.windInfo?.speed}"
-                var weatherString = ""
-                result.cityWeather?.weatherDescription?.forEach { weatherString += "${it.description} \n" }
-                tvWeatherDescription.text = weatherString
-            } else {
-                tvCityName.text = result.cityName
-                layoutCityData.gone()
-                tvCityNotFound.unHide()
-            }
+        fun bindResult(result: CityWeatherWithDate) {
+            tvCityNotFound.gone()
+            tvTitle.text = result.date
+            val mainInfo = result.mainInfo
+            tvTemp.text =
+                "${mainInfo?.minTemp} - ${mainInfo?.maxTemp}"
+            tvWindSpeed.text =
+                "${result.windInfo?.speed}"
+            var weatherString = ""
+            result.weatherDescription?.forEach { weatherString += "${it.description} \n" }
+            tvWeatherDescription.text = weatherString
+
 
         }
     }

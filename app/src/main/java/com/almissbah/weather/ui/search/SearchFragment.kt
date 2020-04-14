@@ -77,7 +77,7 @@ class SearchFragment : WeatherForecastFragment() {
         showSnackbar(view!!, "Failed to connect !")
     }
 
-    private fun updateList(payload: MutableList<SearchResult>?) {
+    private fun updateList(payload: MutableList<CityWeatherWithData>?) {
         mAdapter?.setData(payload!!)
     }
 

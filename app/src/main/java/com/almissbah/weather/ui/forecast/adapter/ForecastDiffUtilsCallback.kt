@@ -1,13 +1,13 @@
-package com.almissbah.weather.ui.search.adapter
+package com.almissbah.weather.ui.forecast.adapter
 
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import com.almissbah.weather.ui.search.CityWeatherWithData
+import com.almissbah.weather.data.remote.model.CityWeatherWithDate
 
 
-class DiffUtilsCallback(
-    private val oldList: List<CityWeatherWithData>,
-    private val newList: List<CityWeatherWithData>
+class ForecastDiffUtilsCallback(
+    private val oldList: List<CityWeatherWithDate>,
+    private val newList: List<CityWeatherWithDate>
 ) :
     DiffUtil.Callback() {
 
@@ -25,7 +25,7 @@ class DiffUtilsCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].cityWeather?.windInfo?.speed == newList[newItemPosition].cityWeather?.windInfo?.speed
+        return oldList[oldItemPosition].windInfo?.speed == newList[newItemPosition].windInfo?.speed
     }
 
 

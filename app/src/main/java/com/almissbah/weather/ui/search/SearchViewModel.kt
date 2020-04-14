@@ -23,8 +23,9 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
     private val _queryValidator = MutableLiveData<SearchInputUtils.CitiesCount>()
     val queryValidator: LiveData<SearchInputUtils.CitiesCount> = _queryValidator
 
-    private val _searchResult = MutableLiveData<Resource<MutableList<SearchResult>, Action>>()
-    val searchResult: LiveData<Resource<MutableList<SearchResult>, Action>> = _searchResult
+    private val _searchResult =
+        MutableLiveData<Resource<MutableList<CityWeatherWithData>, Action>>()
+    val searchResult: LiveData<Resource<MutableList<CityWeatherWithData>, Action>> = _searchResult
 
 
     private fun fetchWeatherInfo(list: List<String>) {
@@ -45,22 +46,22 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
         it: MutableList<Response<CityWeather>>,
         list: List<String>
     ) {
-        val resultsList = mutableListOf<SearchResult>()
+        val resultsList = mutableListOf<CityWeatherWithData>()
         it.forEach {
             if (it.isSuccessful) {
                 resultsList.add(
-                    SearchResult(
+                    CityWeatherWithData(
                         it.body()!!.cityName!!,
                         it.body(),
-                        SearchResult.Result.Found
+                        CityWeatherWithData.Result.Found
                     )
                 )
             } else {
                 resultsList.add(
-                    SearchResult(
+                    CityWeatherWithData(
                         "null",
                         null,
-                        SearchResult.Result.NotFound
+                        CityWeatherWithData.Result.NotFound
                     )
                 )
             }
@@ -70,11 +71,11 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
     }
 
     private fun recoverCitiesNames(
-        resultsList: MutableList<SearchResult>,
+        resultsList: MutableList<CityWeatherWithData>,
         list: List<String>
     ) {
         resultsList.forEachIndexed { index, searchResult ->
-            if (searchResult.result == SearchResult.Result.NotFound) {
+            if (searchResult.result == CityWeatherWithData.Result.NotFound) {
                 searchResult.cityName = list[index]
             }
         }
