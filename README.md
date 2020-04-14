@@ -28,7 +28,7 @@ Based on mvvm architecture and repository pattern.
 
 
 ### App Specs
-* Minimum SDK 21.
+* Minimum SDK 16.
 * Kotlin.
 * MVVM Architecture.
 * Android Architecture Components (LiveData, Lifecycle, ViewModel, ConstraintLayout, Navigation component)
