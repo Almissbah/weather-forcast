@@ -12,6 +12,4 @@ class WeatherForecastApp : DaggerApplication() {
         component.inject(this)
         return component
     }
-
-
 }

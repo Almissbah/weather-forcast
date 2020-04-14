@@ -11,8 +11,6 @@ abstract class WeatherForecastFragment : BaseFragment() {
 
     abstract fun subscribe()
 
-    abstract fun unSubscribe()
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -21,15 +19,8 @@ abstract class WeatherForecastFragment : BaseFragment() {
     }
 
 
-    override fun onDestroy() {
-        unSubscribe()
-        super.onDestroy()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViews()
         super.onViewCreated(view, savedInstanceState)
     }
-
-
 }

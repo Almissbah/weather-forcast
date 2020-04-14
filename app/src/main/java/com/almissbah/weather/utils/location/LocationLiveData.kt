@@ -1,9 +1,11 @@
-package com.almissbah.weather.utils
+package com.almissbah.weather.utils.location
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import androidx.lifecycle.LiveData
+import com.almissbah.weather.utils.LOCATION_REQUEST_FAST_INTERVAL
+import com.almissbah.weather.utils.LOCATION_REQUEST_INTERVAL
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -14,8 +16,8 @@ class LocationLiveData(context: Context) : LiveData<LocationData>() {
 
     companion object {
         val locationRequest: LocationRequest = LocationRequest.create().apply {
-            interval = 160000
-            fastestInterval = 20000
+            interval = LOCATION_REQUEST_INTERVAL
+            fastestInterval = LOCATION_REQUEST_FAST_INTERVAL
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
     }

@@ -1,16 +1,14 @@
 package com.almissbah.weather.utils
 
-import java.util.*
 
-
-class SearchInputUtils {
+class UserInputValidator {
     enum class CitiesCount { Valid, LessThanThreeCities, MoreThanSevenCities }
 
     companion object {
 
         fun getValidCityList(query: String): List<String> {
             return query.split(",").filter { it.isNotBlank() }.map {
-                it.trim().toLowerCase(Locale.ROOT)
+                it.trimAndCapitalFirst()
             }.toSet().toList()
         }
 

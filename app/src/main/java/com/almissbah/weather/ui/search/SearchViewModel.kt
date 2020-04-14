@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.almissbah.weather.data.Resource
 import com.almissbah.weather.data.remote.model.CityWeather
 import com.almissbah.weather.data.repo.CityWeatherRepo
-import com.almissbah.weather.utils.SearchInputUtils
+import com.almissbah.weather.utils.UserInputValidator
 import io.reactivex.disposables.Disposable
 import retrofit2.Response
 import javax.inject.Inject
@@ -20,15 +20,15 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
     enum class Action { UpdateList, ShowNetworkError }
 
     private var disposable: Disposable? = null
-    private val _queryValidator = MutableLiveData<SearchInputUtils.CitiesCount>()
-    val queryValidator: LiveData<SearchInputUtils.CitiesCount> = _queryValidator
+    private val _queryValidator = MutableLiveData<UserInputValidator.CitiesCount>()
+    val queryValidator: LiveData<UserInputValidator.CitiesCount> = _queryValidator
 
     private val _searchResult =
         MutableLiveData<Resource<MutableList<CityWeatherWithData>, Action>>()
     val searchResult: LiveData<Resource<MutableList<CityWeatherWithData>, Action>> = _searchResult
 
 
-    private fun fetchWeatherInfo(list: List<String>) {
+    private fun fetchDataFromRepo(list: List<String>) {
         disposable = weatherRepo.getAllCitiesWeather(list).subscribe { it ->
             if (it.isEmpty()) {
                 handleError()
@@ -81,12 +81,17 @@ class SearchViewModel @Inject constructor(private val weatherRepo: CityWeatherRe
         }
     }
 
-    fun validateInput(query: String) {
-        val list = SearchInputUtils.getValidCityList(query)
-        val result = SearchInputUtils.validateCitiesCount(list.size)
-        if (result == SearchInputUtils.CitiesCount.Valid) {
-            fetchWeatherInfo(list)
+    fun getCitiesWeather(query: String) {
+        val list = UserInputValidator.getValidCityList(query)
+        val result = UserInputValidator.validateCitiesCount(list.size)
+        if (result == UserInputValidator.CitiesCount.Valid) {
+            fetchDataFromRepo(list)
         }
         _queryValidator.postValue(result)
+    }
+
+    fun unSubscribe() {
+        disposable?.dispose()
+        disposable = null
     }
 }

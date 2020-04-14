@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
 import com.almissbah.weather.ui.forecast.adapter.CityForecastAdapter
-import com.almissbah.weather.utils.LocationUtils.Companion.checkPermissions
-import com.almissbah.weather.utils.LocationUtils.Companion.isLocationEnabled
 import com.almissbah.weather.utils.hide
+import com.almissbah.weather.utils.location.LocationUtils.Companion.checkPermissions
+import com.almissbah.weather.utils.location.LocationUtils.Companion.isLocationEnabled
 import com.almissbah.weather.utils.unHide
 import kotlinx.android.synthetic.main.fragment_forcast.*
 import javax.inject.Inject
@@ -57,11 +56,10 @@ class ForecastFragment : WeatherForecastFragment() {
             hideLoading()
             when (it.action) {
                 ForecastViewModel.Action.Success -> {
-                    Log.i("cityForecast", it.payload?.city!!.country)
                     tvCurrentCity.text = "${it.payload?.city!!.name}, ${it.payload?.city!!.country}"
                     mAdapter?.setData(it!!.payload!!.list)
                 }
-                ForecastViewModel.Action.NotFound -> TODO()
+                ForecastViewModel.Action.NotFound -> showNetworkError()
                 ForecastViewModel.Action.ShowNetworkError -> showNetworkError()
             }
         })
@@ -69,10 +67,6 @@ class ForecastFragment : WeatherForecastFragment() {
 
     private fun showNetworkError() {
         errorLayout.unHide()
-    }
-
-    override fun unSubscribe() {
-
     }
 
     override fun onCreateView(
@@ -118,7 +112,6 @@ class ForecastFragment : WeatherForecastFragment() {
     private fun subscribeToLocationUpdates() {
         if (checkPermissions(context!!)) {
             forecastViewModel.getLocationData().observe(viewLifecycleOwner, Observer {
-                Log.i("Location", " working ${it.lat}  ${it.lon}")
                 forecastViewModel.getCityForecast(it)
             })
 
@@ -131,7 +124,7 @@ class ForecastFragment : WeatherForecastFragment() {
     }
 
     private fun launchSettingsScreen() {
-        showToast("Turn on location")
+        showToast(getString(R.string.turn_on_gps_msg))
         val intent = Intent(ACTION_LOCATION_SOURCE_SETTINGS)
         startActivity(intent)
     }

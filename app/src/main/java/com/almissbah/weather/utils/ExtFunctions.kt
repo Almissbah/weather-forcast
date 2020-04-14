@@ -13,3 +13,7 @@ fun View.unHide() {
 fun View.gone() {
     this.visibility = View.GONE
 }
+
+fun String.trimAndCapitalFirst(): String {
+    return trim().toLowerCase().capitalize()
+}

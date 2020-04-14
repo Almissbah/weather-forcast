@@ -1,10 +1,10 @@
 package com.almissbah.weather.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.almissbah.weather.R
 import com.almissbah.weather.ui.base.WeatherForecastFragment
 import com.almissbah.weather.ui.search.adapter.SearchResultAdapter
-import com.almissbah.weather.utils.SearchInputUtils
+import com.almissbah.weather.utils.UserInputValidator
 import com.almissbah.weather.utils.hide
 import com.almissbah.weather.utils.unHide
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
+
 
 class SearchFragment : WeatherForecastFragment() {
 
@@ -40,8 +41,15 @@ class SearchFragment : WeatherForecastFragment() {
         mAdapter = SearchResultAdapter()
         rvSearchResults.adapter = mAdapter
         btnSearch.setOnClickListener {
-            searchViewModel.validateInput(etSearch.text.toString())
+            searchViewModel.getCitiesWeather(etSearch.text.toString())
 
+        }
+
+        etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                searchViewModel.getCitiesWeather(etSearch.text.toString())
+            }
+            false
         }
         mProgressBar = progressBar
     }
@@ -49,11 +57,11 @@ class SearchFragment : WeatherForecastFragment() {
     override fun subscribe() {
         searchViewModel.queryValidator.observe(viewLifecycleOwner, Observer {
             when (it) {
-                SearchInputUtils.CitiesCount.LessThanThreeCities -> etSearch.error =
-                    "You entered less than three different cities !"
-                SearchInputUtils.CitiesCount.MoreThanSevenCities -> etSearch.error =
-                    "You entered more than seven cities !"
-                SearchInputUtils.CitiesCount.Valid -> {
+                UserInputValidator.CitiesCount.LessThanThreeCities -> etSearch.error =
+                    getString(R.string.less_than_three_error_msg)
+                UserInputValidator.CitiesCount.MoreThanSevenCities -> etSearch.error =
+                    getString(R.string.more_than_seven_error_msg)
+                UserInputValidator.CitiesCount.Valid -> {
                     btnSearch.hide()
                     showLoading()
                     ivNoItems.hide()
@@ -74,16 +82,15 @@ class SearchFragment : WeatherForecastFragment() {
     }
 
     private fun showNetworkError() {
-        Log.i("showNetworkError", "showNetworkError")
-        showSnackbar(view!!, "Failed to connect !")
+        showSnackbar(view!!, getString(R.string.connection_faild_msg))
+        rvSearchResults.hide()
+        ivNoItems.unHide()
     }
 
     private fun updateList(payload: MutableList<CityWeatherWithData>?) {
+        rvSearchResults.unHide()
         mAdapter?.setData(payload!!)
         ivNoItems.hide()
-    }
-
-    override fun unSubscribe() {
     }
 
     override fun onCreateView(
@@ -95,5 +102,9 @@ class SearchFragment : WeatherForecastFragment() {
         return root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        searchViewModel.unSubscribe()
+    }
 
 }

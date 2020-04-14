@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Please enter 3 to 7 different cities comma separated."
+        android:text="@string/search_description_msg"
         android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/etSearch"
@@ -44,10 +44,11 @@
         android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:padding="10dp"
-        android:text="@string/search_hint"
+        android:layout_marginLeft="24dp"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/search_hint"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -62,6 +63,7 @@
         app:layout_constraintStart_toEndOf="@+id/etSearch"
         app:layout_constraintTop_toTopOf="@+id/etSearch"
         app:layout_constraintVertical_bias="0.51"
+        android:layout_marginRight="16dp"
         app:tintMode="multiply" />
 
     <androidx.recyclerview.widget.RecyclerView

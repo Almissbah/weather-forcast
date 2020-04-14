@@ -32,8 +32,4 @@ abstract class BaseFragment : DaggerFragment() {
         mProgressBar?.hide()
     }
 
-    interface DialogCallback {
-        fun onConfirm()
-        fun onCancel()
-    }
 }

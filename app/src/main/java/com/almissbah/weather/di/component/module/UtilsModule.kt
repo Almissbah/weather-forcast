@@ -1,7 +1,7 @@
 package com.almissbah.weather.di.component.module
 
 import android.app.Application
-import com.almissbah.weather.utils.LocationLiveData
+import com.almissbah.weather.utils.location.LocationLiveData
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

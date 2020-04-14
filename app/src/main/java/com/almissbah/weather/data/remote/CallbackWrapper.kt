@@ -27,13 +27,7 @@ open class CallbackWrapper<T>(private val callback: HttpCallback<T>) :
     override fun onError(e: Throwable) {
         when (e) {
             is HttpException -> {
-                val response = e.response()
-                if (response.code() == HTTP_NOT_FOUND
-                ) {
-                    callback.onNotFound()
-                } else {
-                    callback.onServerError()
-                }
+                callback.onServerError()
             }
             is SocketTimeoutException -> {
                 callback.onNetworkError()

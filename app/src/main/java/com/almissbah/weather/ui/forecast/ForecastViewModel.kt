@@ -8,8 +8,8 @@ import com.almissbah.weather.data.remote.CallbackWrapper
 import com.almissbah.weather.data.remote.model.City5DaysForecast
 import com.almissbah.weather.data.remote.model.CityForecastRequest
 import com.almissbah.weather.data.repo.CityForecastRepo
-import com.almissbah.weather.utils.LocationData
-import com.almissbah.weather.utils.LocationLiveData
+import com.almissbah.weather.utils.location.LocationData
+import com.almissbah.weather.utils.location.LocationLiveData
 import javax.inject.Inject
 
 class ForecastViewModel @Inject constructor(
@@ -25,10 +25,10 @@ class ForecastViewModel @Inject constructor(
     private val _cityForecast = MutableLiveData<Resource<City5DaysForecast, Action>>()
     val cityForecast: LiveData<Resource<City5DaysForecast, Action>> = _cityForecast
 
-    fun getCityForecast(it: LocationData?) {
-        if (it == null) return
-        mLocationData = it
-        forecastRepo.getCityForecast(CityForecastRequest(it.lat, it.lon))
+    fun getCityForecast(locationData: LocationData?) {
+        if (locationData == null) return
+        mLocationData = locationData
+        forecastRepo.getCityForecast(CityForecastRequest(locationData.lat, locationData.lon))
             .subscribe(CallbackWrapper(object : CallbackWrapper.HttpCallback<City5DaysForecast> {
                 override fun onSuccess(t: City5DaysForecast?) {
                     _cityForecast.postValue(Resource(t, Action.Success, ""))

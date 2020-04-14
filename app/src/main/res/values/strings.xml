@@ -13,4 +13,10 @@
 
     <string name="home_second">Home Second</string>
     <string name="search_hint">Dubai, Abu Dhabi, Sharijah ..</string>
+    <string name="turn_on_gps_msg">Turn on location</string>
+    <string name="less_than_three_error_msg">You entered less than three different cities !</string>
+    <string name="more_than_seven_error_msg">You entered more than seven cities !</string>
+    <string name="connection_faild_msg">Failed to connect !</string>
+    <string name="city_not_found">City not found.</string>
+    <string name="search_description_msg">Please enter 3 to 7 different cities comma separated.</string>
 </resources>

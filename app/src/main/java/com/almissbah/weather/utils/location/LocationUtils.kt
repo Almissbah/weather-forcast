@@ -1,4 +1,4 @@
-package com.almissbah.weather.utils
+package com.almissbah.weather.utils.location
 
 import android.Manifest
 import android.content.Context
