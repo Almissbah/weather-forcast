@@ -58,6 +58,7 @@ class ForecastFragment : WeatherForecastFragment() {
             when (it.action) {
                 ForecastViewModel.Action.Success -> {
                     Log.i("cityForecast", it.payload?.city!!.country)
+                    tvCurrentCity.text = "${it.payload?.city!!.name}, ${it.payload?.city!!.country}"
                     mAdapter?.setData(it!!.payload!!.list)
                 }
                 ForecastViewModel.Action.NotFound -> TODO()
