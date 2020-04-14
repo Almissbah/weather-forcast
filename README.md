@@ -42,7 +42,7 @@ Based on mvvm architecture and repository pattern.
 * Junit 4 for testing.
 
 ### Notes 
-* Unit tests are generated for SearchInputUtils.
+* Unit tests are created for UserInputValidator and Sample espresso tests are created for MainActivity.
 * For generating covarage reports launch gradle window from android studio's side bar and run the following command:
    gradle :app:createDebugCoverageReport
  
