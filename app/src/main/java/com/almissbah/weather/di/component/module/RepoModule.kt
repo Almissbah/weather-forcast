@@ -1,9 +1,9 @@
 package com.almissbah.weather.di.component.module
 
 import com.almissbah.weather.data.remote.WeatherApiService
-import com.almissbah.weather.data.remote.repo.AppRepository
-import com.almissbah.weather.data.remote.repo.CityForecastRepo
-import com.almissbah.weather.data.remote.repo.CityWeatherRepo
+import com.almissbah.weather.data.repo.AppRepository
+import com.almissbah.weather.data.repo.CityForecastRepo
+import com.almissbah.weather.data.repo.CityWeatherRepo
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

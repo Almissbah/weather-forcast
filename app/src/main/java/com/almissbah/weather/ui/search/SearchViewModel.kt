@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.almissbah.weather.data.Resource
 import com.almissbah.weather.data.remote.model.CityWeather
-import com.almissbah.weather.data.remote.repo.CityWeatherRepo
+import com.almissbah.weather.data.repo.CityWeatherRepo
 import com.almissbah.weather.utils.SearchInputUtils
 import io.reactivex.disposables.Disposable
 import retrofit2.Response

@@ -7,7 +7,7 @@ import com.almissbah.weather.data.Resource
 import com.almissbah.weather.data.remote.CallbackWrapper
 import com.almissbah.weather.data.remote.model.City5DaysForecast
 import com.almissbah.weather.data.remote.model.CityForecastRequest
-import com.almissbah.weather.data.remote.repo.CityForecastRepo
+import com.almissbah.weather.data.repo.CityForecastRepo
 import com.almissbah.weather.utils.LocationData
 import com.almissbah.weather.utils.LocationLiveData
 import javax.inject.Inject

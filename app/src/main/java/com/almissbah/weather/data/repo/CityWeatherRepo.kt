@@ -1,4 +1,4 @@
-package com.almissbah.weather.data.remote.repo
+package com.almissbah.weather.data.repo
 
 import com.almissbah.weather.data.remote.model.CityWeather
 import com.almissbah.weather.data.remote.model.CityWeatherRequest
