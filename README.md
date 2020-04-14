@@ -47,4 +47,8 @@ Based on mvvm architecture and repository pattern.
    gradle :app:createDebugCoverageReport
 * To run the app clone the repo into a new android studio project and build the code then lanuch it on any android phone.
 * To run test cases head toward (test and androidTest) packages in android studio, right click on the class and seleced run.
+
+## App links
+
+* [Download Sample APK](app-debug.apk)
  
