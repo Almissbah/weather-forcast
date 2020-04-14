@@ -60,6 +60,8 @@ class SearchFragment : WeatherForecastFragment() {
             }
         })
 
+
+
         searchViewModel.searchResult.observe(viewLifecycleOwner, Observer {
             btnSearch.unHide()
             hideLoading()
@@ -72,6 +74,7 @@ class SearchFragment : WeatherForecastFragment() {
 
     private fun showNetworkError() {
         Log.i("showNetworkError", "showNetworkError")
+        showSnackbar(view!!, "Failed to connect !")
     }
 
     private fun updateList(payload: MutableList<SearchResult>?) {

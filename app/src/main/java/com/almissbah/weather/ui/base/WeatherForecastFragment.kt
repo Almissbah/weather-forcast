@@ -3,6 +3,7 @@ package com.almissbah.weather.ui.base
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.almissbah.weather.utils.hide
 import com.almissbah.weather.utils.unHide
 import com.google.android.material.snackbar.Snackbar
@@ -45,6 +46,9 @@ abstract class WeatherForecastFragment : DaggerFragment() {
         ).show()
     }
 
+    fun showToast(msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+    }
     fun showLoading() {
         mProgressBar?.unHide()
     }

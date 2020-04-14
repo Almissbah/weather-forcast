@@ -5,6 +5,7 @@ import com.almissbah.weather.WeatherForecastApp
 import com.almissbah.weather.di.component.module.ActivityModule
 import com.almissbah.weather.di.component.module.ApiModule
 import com.almissbah.weather.di.component.module.RepoModule
+import com.almissbah.weather.di.component.module.UtilsModule
 import com.almugdad.takhlesy.di.module.FragmentModule
 import com.almugdad.takhlesy.di.module.ViewModelModule
 import dagger.BindsInstance
@@ -14,7 +15,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApiModule::class, RepoModule::class, AndroidSupportInjectionModule::class, ViewModelModule::class, FragmentModule::class, ActivityModule::class])
+@Component(modules = [ApiModule::class, RepoModule::class, UtilsModule::class, AndroidSupportInjectionModule::class, ViewModelModule::class, FragmentModule::class, ActivityModule::class])
 interface AppComponent : AndroidInjector<WeatherForecastApp> {
 
     @Component.Builder
