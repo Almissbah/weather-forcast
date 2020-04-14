@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_gallery">
+    app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_search"
         android:name="com.almissbah.weather.ui.search.SearchFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_search">
@@ -15,14 +15,21 @@
 
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_forecast"
         android:name="com.almissbah.weather.ui.forecast.ForecastFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_forcast" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.almissbah.weather.ui.splash.SplashFragment"
+        android:id="@+id/nav_home"
+        android:name="com.almissbah.weather.ui.home.HomeFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_nav_forecast"
+            app:destination="@id/nav_forecast" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
 </navigation>

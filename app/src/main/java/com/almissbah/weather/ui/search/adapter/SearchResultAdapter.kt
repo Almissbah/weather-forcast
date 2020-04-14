@@ -23,7 +23,7 @@ class SearchResultAdapter :
         val context: Context = viewGroup.context
         val layoutInflater = LayoutInflater.from(context)
 
-        val listItem: View = layoutInflater.inflate(R.layout.search_list_item, viewGroup, false)
+        val listItem: View = layoutInflater.inflate(R.layout.weather_list_item, viewGroup, false)
         return ViewHolder(listItem)
 
     }
@@ -55,26 +55,27 @@ class SearchResultAdapter :
     fun setData(newList: MutableList<CityWeatherWithData>) {
 
         val diffCallback =
-            DiffUtilsCallback(
+            SearchDiffUtilsCallback(
                 mList,
                 newList
             )
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        diffResult.dispatchUpdatesTo(this)
         mList = newList
+        diffResult.dispatchUpdatesTo(this)
+
 
     }
 
     private fun updateItemView(holder: ViewHolder, position: Int, result: CityWeatherWithData) {
         mList[position] = result
-
+        holder.bindResult(result)
     }
 
     override fun getItemViewType(position: Int): Int {
         return position
     }
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var tvCityName: TextView = view.findViewById(R.id.tvTitle)
         var tvTemp: TextView = view.findViewById(R.id.tvTemp)
         var tvWindSpeed: TextView = view.findViewById(R.id.tvWindSpeed)
@@ -84,12 +85,13 @@ class SearchResultAdapter :
         fun bindResult(result: CityWeatherWithData) {
             if (result.result == CityWeatherWithData.Result.Found) {
                 tvCityNotFound.gone()
+                layoutCityData.unHide()
                 tvCityName.text = result.cityName
                 val mainInfo = result.cityWeather?.mainInfo
                 tvTemp.text =
-                    "${mainInfo?.minTemp} - ${mainInfo?.maxTemp}"
+                    "${mainInfo?.minTemp} - ${mainInfo?.maxTemp} K"
                 tvWindSpeed.text =
-                    "${result.cityWeather?.windInfo?.speed}"
+                    "${result.cityWeather?.windInfo?.speed} m/s"
                 var weatherString = ""
                 result.cityWeather?.weatherDescription?.forEach { weatherString += "${it.description} \n" }
                 tvWeatherDescription.text = weatherString

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.search.SearchFragment">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Please enter 3 to 7 different cities."
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/etSearch"
@@ -39,9 +41,11 @@
         android:layout_marginTop="36dp"
         android:background="@drawable/edit_text_background"
         android:ems="10"
-        android:text="@string/search_hint"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:padding="10dp"
+        android:text="@string/search_hint"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -87,5 +91,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".85" />
+
+    <ImageView
+        android:id="@+id/ivNoItems"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/clouds_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/rvSearchResults"
+        app:layout_constraintEnd_toEndOf="@+id/rvSearchResults"
+        app:layout_constraintStart_toStartOf="@+id/rvSearchResults"
+        app:layout_constraintTop_toTopOf="@+id/rvSearchResults" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

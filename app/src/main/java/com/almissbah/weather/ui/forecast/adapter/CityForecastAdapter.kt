@@ -21,7 +21,7 @@ class CityForecastAdapter :
         val context: Context = viewGroup.context
         val layoutInflater = LayoutInflater.from(context)
 
-        val listItem: View = layoutInflater.inflate(R.layout.search_list_item, viewGroup, false)
+        val listItem: View = layoutInflater.inflate(R.layout.weather_list_item, viewGroup, false)
         return ViewHolder(listItem)
 
     }
@@ -58,8 +58,9 @@ class CityForecastAdapter :
                 newList
             )
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        diffResult.dispatchUpdatesTo(this)
         mList = newList
+        diffResult.dispatchUpdatesTo(this)
+
 
     }
 
@@ -83,9 +84,9 @@ class CityForecastAdapter :
             tvTitle.text = result.date
             val mainInfo = result.mainInfo
             tvTemp.text =
-                "${mainInfo?.minTemp} - ${mainInfo?.maxTemp}"
+                "${mainInfo?.minTemp} - ${mainInfo?.maxTemp} K"
             tvWindSpeed.text =
-                "${result.windInfo?.speed}"
+                "${result.windInfo?.speed} m/s"
             var weatherString = ""
             result.weatherDescription?.forEach { weatherString += "${it.description} \n" }
             tvWeatherDescription.text = weatherString

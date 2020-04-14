@@ -13,7 +13,7 @@ class ForecastDiffUtilsCallback(
 
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition].cityName == newList[newItemPosition].cityName
     }
 
     override fun getOldListSize(): Int {

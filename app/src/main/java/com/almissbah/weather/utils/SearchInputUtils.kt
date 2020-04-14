@@ -1,5 +1,7 @@
 package com.almissbah.weather.utils
 
+import java.util.*
+
 
 class SearchInputUtils {
     enum class CitiesCount { Valid, LessThanThreeCities, MoreThanSevenCities }
@@ -8,7 +10,7 @@ class SearchInputUtils {
 
         fun getValidCityList(query: String): List<String> {
             return query.split(",").filter { it.isNotBlank() }.map {
-                it.trim()
+                it.trim().toLowerCase(Locale.ROOT)
             }.toSet().toList()
         }
 

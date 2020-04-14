@@ -13,7 +13,7 @@
         android:layout_marginTop="5dp"
         android:padding="10dp"
         android:text="Dubai"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <TextView
@@ -29,12 +29,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <ImageView
             android:id="@+id/tvTempTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:src="@drawable/temp_icon"
             android:text="Temprature"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,12 +55,12 @@
             app:layout_constraintStart_toEndOf="@+id/tvTempTitle"
             app:layout_constraintTop_toTopOf="@+id/tvTempTitle" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tvWindTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="16dp"
-            android:text="Wind Speed"
+            android:src="@drawable/wind_icon"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="@+id/tvTempTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvTempTitle" />
@@ -85,12 +86,11 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".5" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tvWeatherTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Weather"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/weather_icon"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.513"
@@ -101,9 +101,9 @@
             android:id="@+id/tvWeatherDescription"
             android:layout_width="wrap_content"
             android:layout_height="19dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            android:text="Rainy"
+            android:text="-"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

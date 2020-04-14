@@ -18,6 +18,8 @@ import com.almissbah.weather.ui.base.WeatherForecastFragment
 import com.almissbah.weather.ui.forecast.adapter.CityForecastAdapter
 import com.almissbah.weather.utils.LocationUtils.Companion.checkPermissions
 import com.almissbah.weather.utils.LocationUtils.Companion.isLocationEnabled
+import com.almissbah.weather.utils.hide
+import com.almissbah.weather.utils.unHide
 import kotlinx.android.synthetic.main.fragment_forcast.*
 import javax.inject.Inject
 
@@ -45,23 +47,31 @@ class ForecastFragment : WeatherForecastFragment() {
         rvForecast.layoutManager = LinearLayoutManager(this.context)
         mAdapter = CityForecastAdapter()
         rvForecast.adapter = mAdapter
+
+        mProgressBar = progressBar
     }
 
     override fun subscribe() {
         subscribeToLocationUpdates()
         forecastViewModel.cityForecast.observe(viewLifecycleOwner, Observer {
+            hideLoading()
             when (it.action) {
                 ForecastViewModel.Action.Success -> {
                     Log.i("cityForecast", it.payload?.city!!.country)
-                    mAdapter?.setData(it!!.payload!!.list!!)
+                    mAdapter?.setData(it!!.payload!!.list)
                 }
                 ForecastViewModel.Action.NotFound -> TODO()
-                ForecastViewModel.Action.ShowNetworkError -> TODO()
+                ForecastViewModel.Action.ShowNetworkError -> showNetworkError()
             }
         })
     }
 
+    private fun showNetworkError() {
+        errorLayout.unHide()
+    }
+
     override fun unSubscribe() {
+
     }
 
     override fun onCreateView(
@@ -69,11 +79,17 @@ class ForecastFragment : WeatherForecastFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_forcast, container, false)
-
-        return root
+        return inflater.inflate(R.layout.fragment_forcast, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tvRetry.setOnClickListener {
+            forecastViewModel.reTry()
+            showLoading()
+            errorLayout.hide()
+        }
+    }
 
     private fun requestPermissions() {
         requestPermissions(

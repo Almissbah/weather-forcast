@@ -17,6 +17,7 @@ class ForecastViewModel @Inject constructor(
     private val locationLiveData: LocationLiveData
 ) :
     ViewModel() {
+    var mLocationData: LocationData? = null
     fun getLocationData() = locationLiveData
 
     enum class Action { Success, NotFound, ShowNetworkError }
@@ -24,7 +25,9 @@ class ForecastViewModel @Inject constructor(
     private val _cityForecast = MutableLiveData<Resource<City5DaysForecast, Action>>()
     val cityForecast: LiveData<Resource<City5DaysForecast, Action>> = _cityForecast
 
-    fun getCityForecast(it: LocationData) {
+    fun getCityForecast(it: LocationData?) {
+        if (it == null) return
+        mLocationData = it
         forecastRepo.getCityForecast(CityForecastRequest(it.lat, it.lon))
             .subscribe(CallbackWrapper(object : CallbackWrapper.HttpCallback<City5DaysForecast> {
                 override fun onSuccess(t: City5DaysForecast?) {
@@ -32,7 +35,7 @@ class ForecastViewModel @Inject constructor(
                 }
 
                 override fun onNetworkError() {
-                    _cityForecast.postValue(Resource(null, Action.Success, ""))
+                    _cityForecast.postValue(Resource(null, Action.ShowNetworkError, ""))
                 }
 
                 override fun onServerError() {
@@ -43,6 +46,10 @@ class ForecastViewModel @Inject constructor(
                     _cityForecast.postValue(Resource(null, Action.NotFound, ""))
                 }
             }))
+    }
+
+    fun reTry() {
+        getCityForecast(mLocationData!!)
     }
 
 }

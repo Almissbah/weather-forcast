@@ -56,6 +56,7 @@ class SearchFragment : WeatherForecastFragment() {
                 SearchInputUtils.CitiesCount.Valid -> {
                     btnSearch.hide()
                     showLoading()
+                    ivNoItems.hide()
                 }
             }
         })
@@ -79,6 +80,7 @@ class SearchFragment : WeatherForecastFragment() {
 
     private fun updateList(payload: MutableList<CityWeatherWithData>?) {
         mAdapter?.setData(payload!!)
+        ivNoItems.hide()
     }
 
     override fun unSubscribe() {
