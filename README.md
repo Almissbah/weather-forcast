@@ -40,3 +40,6 @@ Based on mvvm architecture and repository pattern.
 
 ### Notes 
 * Unit tests are generated for SearchInputUtils.
+* For generating covarage reports launch gradle window from android studio's side bar and run the following command:
+  # gradle :app:createDebugCoverageReport
+ 
